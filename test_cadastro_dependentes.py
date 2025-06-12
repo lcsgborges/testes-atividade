@@ -1,28 +1,49 @@
-import unittest
-from irpf import IRPF
+package tst;
 
-class CadastroDependentesTest(unittest.TestCase):
+import static org.junit.Assert.*;
 
-    def setUp(self):
-        self.irpf = IRPF()
+import org.junit.Before;
+import org.junit.Test;
 
-    def test_cadastrar_um_dependente(self):
-        self.irpf.cadastrar_dependente("Joao")
-        self.assertEqual(IRPF.VALOR_DEDUCAO_POR_DEPENDENTE, self.irpf.get_deducao_dependentes())
+import app.IRPF;
 
-    def test_cadastrar_dois_dependentes(self):
-        self.irpf.cadastrar_dependente("Joao")
-        self.irpf.cadastrar_dependente("Maria")
-        self.assertEqual(2 * IRPF.VALOR_DEDUCAO_POR_DEPENDENTE, self.irpf.get_deducao_dependentes())
+public class CadastroDependentesTest {
 
-    def test_cadastrar_tres_dependentes(self):
-        self.irpf.cadastrar_dependente("Joao")
-        self.irpf.cadastrar_dependente("Maria")
-        self.irpf.cadastrar_dependente("Jose")
-        self.assertEqual(3 * IRPF.VALOR_DEDUCAO_POR_DEPENDENTE, self.irpf.get_deducao_dependentes())
+    private IRPF irpf;
 
-    def test_cadastrar_cinco_dependentes(self):
-        dependentes = ["Joao", "Maria", "Jose", "Maria Jose", "Jose Maria"]
-        for nome in dependentes:
-            self.irpf.cadastrar_dependente(nome)
-        self.assertEqual(5 * IRPF.VALOR_DEDUCAO_POR_DEPENDENTE, self.irpf.get_deducao_dependentes())
+    @Before
+    public void setup() {
+        irpf = new IRPF();
+    }
+
+    @Test
+    public void testCadastrarUmDependente() {
+        irpf.cadastrarDependente("Joao");
+        assertEquals(IRPF.VALOR_DEDUCAO_POR_DEPENDENTE, irpf.getDeducaoDependentes(), 0);
+    }
+
+    @Test
+    public void testCadastrarDoisDependentes() {
+        irpf.cadastrarDependente("Joao");
+        irpf.cadastrarDependente("Maria");
+        assertEquals(2 * IRPF.VALOR_DEDUCAO_POR_DEPENDENTE, irpf.getDeducaoDependentes(), 0);
+    }
+
+    @Test
+    public void testCadastrarTresDependentes() {
+        irpf.cadastrarDependente("Joao");
+        irpf.cadastrarDependente("Maria");
+        irpf.cadastrarDependente("Jose");
+        assertEquals(3 * IRPF.VALOR_DEDUCAO_POR_DEPENDENTE, irpf.getDeducaoDependentes(), 0);
+    }
+
+    @Test
+    public void testCadastrarCincoDependentes() {
+        irpf.cadastrarDependente("Joao");
+        irpf.cadastrarDependente("Maria");
+        irpf.cadastrarDependente("Jose");
+        irpf.cadastrarDependente("Maria Jose");
+        irpf.cadastrarDependente("Jose Maria");
+        assertEquals(5 * IRPF.VALOR_DEDUCAO_POR_DEPENDENTE, irpf.getDeducaoDependentes(), 0);
+    }
+}
